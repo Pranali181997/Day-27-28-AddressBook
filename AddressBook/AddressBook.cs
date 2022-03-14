@@ -6,12 +6,15 @@ namespace AddressBook
 {
     class AddressBook
     {
-        //creation of list
-        public static List<Contact> People;
+        //creates a list
+        public List<Contact> People;
+
         public AddressBook()
         {
             People = new List<Contact>();
         }
+
+
         public Contact FindContact(string fname)
         {
             //finding the person's contact by first name
@@ -35,6 +38,7 @@ namespace AddressBook
             else
                 return false;
         }
+
 
         public bool RemoveContact(string name)
         {
