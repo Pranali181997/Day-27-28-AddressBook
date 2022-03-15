@@ -8,7 +8,6 @@ namespace AddressBook
     {
         //creating an hashset to store contacts
         public HashSet<Contact> People;
-
         public AddressBook()
         {
             People = new HashSet<Contact>();
