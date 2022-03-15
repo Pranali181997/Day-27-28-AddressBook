@@ -4,8 +4,14 @@ namespace AddressBook
 {
     class Program
     {
+        /// <summary>
+        /// Defines the entry point of the application.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
         static void Main(string[] args)
         {
+            //welcome message
+            Console.WriteLine("Hello, Welcome to Address Book");
             //reference for binder class
             AddressBookBinder binder = new AddressBookBinder();
             int result = 1;
@@ -18,7 +24,7 @@ namespace AddressBook
                 int loop = 1;
                 while (loop == 1)
                 {
-                    Console.WriteLine("\nSelect the option. \n1. Add new contact. \n2. Edit existing contact.\n3. Delete Contact \n4. Exit.");
+                    Console.WriteLine("\nSelect the option. \n1. Add new contact. \n2. Edit existing contact.\n3. Delete Contact \n4. Search By City \n5. Count citywise contacts \n6. Exit.");
                     int option = int.Parse(Console.ReadLine());
                     switch (option)
                     {
@@ -92,11 +98,26 @@ namespace AddressBook
                                 break;
                             }
                         case 4:
+                            Console.WriteLine("Enter city whose contacts need to be searched");
+                            string city = Console.ReadLine();
+                            foreach (Contact contact in binder.CityDictionary[city])
+                            {
+                                Console.WriteLine(contact.FirstName + "\t" + contact.LastName + "\t" + contact.Address + "\t" + contact.City + "\t" + contact.State + "\t" + contact.ZipCode + "\t" + contact.PhoneNumber + "\t" + contact.Email);
+                            }
+                            break;
+                        case 5:
+                            foreach (var key in binder.CityDictionary.Keys)
+                            {
+                                Console.WriteLine(key + "\t" + binder.CityDictionary[key].Count);
+                            }
+                            break;
+                        case 6:
                             loop = 0;
                             break;
                     }
+                    binder.Binder[addrName] = (book.People);
+                    binder.CreateDictionary();
                 }
-                binder.Binder[addrName] = (book.People);
                 Console.WriteLine("Do you want to enter an address book. \n1. yes \n2. no");
                 result = int.Parse(Console.ReadLine());
             }
