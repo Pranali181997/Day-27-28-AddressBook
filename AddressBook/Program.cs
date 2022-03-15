@@ -4,9 +4,12 @@ namespace AddressBook
 {
     class Program
     {
+        /// <summary>
+        /// Defines the entry point of the application.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
         static void Main(string[] args)
         {
-            //welcome message
             Console.WriteLine("Hello, Welcome to Address Book");
             //reference for binder class
             AddressBookBinder binder = new AddressBookBinder();
@@ -15,13 +18,12 @@ namespace AddressBook
             {
                 Console.WriteLine("Enter the name of the Address Book to be used");
                 string addrName = Console.ReadLine();
-                //reference for adressbook class
                 AddressBook book = new AddressBook();
                 book.People = binder.AddAddrBook(addrName, book.People);
                 int loop = 1;
                 while (loop == 1)
                 {
-                    Console.WriteLine("\nSelect the option. \n1. Add new contact. \n2. Edit existing contact.\n3. Delete Contact \n4. Exit.");
+                    Console.WriteLine("\nSelect the option. \n1. Add new contact. \n2. Edit existing contact.\n3. Delete Contact \n4. Search By City \n5. Count citywise contacts \n6. Display Alphabetically \n7. Sort By Zipcode \n8. Sort By City \n9. Sort By State \n10. Exit.");
                     int option = int.Parse(Console.ReadLine());
                     switch (option)
                     {
@@ -95,11 +97,39 @@ namespace AddressBook
                                 break;
                             }
                         case 4:
+                            binder.CreateDictionary();
+                            Console.WriteLine("Enter city whose contacts need to be searched");
+                            string city = Console.ReadLine();
+                            foreach (Contact contact in binder.CityDictionary[city])
+                            {
+                                Console.WriteLine(contact.FirstName + "\t" + contact.LastName + "\t" + contact.Address + "\t" + contact.City + "\t" + contact.State + "\t" + contact.ZipCode + "\t" + contact.PhoneNumber + "\t" + contact.Email);
+                            }
+                            break;
+                        case 5:
+                            binder.CreateDictionary();
+                            foreach (var key in binder.CityDictionary.Keys)
+                            {
+                                Console.WriteLine(key + "\t" + binder.CityDictionary[key].Count);
+                            }
+                            break;
+                        case 6:
+                            book.AlphabeticallyArrange();
+                            break;
+                        case 7:
+                            book.SortByPincode();
+                            break;
+                        case 8:
+                            book.SortByCity();
+                            break;
+                        case 9:
+                            book.SortByState();
+                            break;
+                        case 10:
                             loop = 0;
                             break;
                     }
+                    binder.Binder[addrName] = (book.People);
                 }
-                binder.Binder[addrName] = (book.People);
                 Console.WriteLine("Do you want to enter an address book. \n1. yes \n2. no");
                 result = int.Parse(Console.ReadLine());
             }

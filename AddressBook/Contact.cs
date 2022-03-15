@@ -6,15 +6,15 @@ namespace AddressBook
 {
     class Contact
     {
-
+ 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
         public string Address { get; set; }
 
-        public string City { get; set; }
 
+        public string City { get; set; }
 
         public string State { get; set; }
 
@@ -23,6 +23,7 @@ namespace AddressBook
         public string PhoneNumber { get; set; }
 
         public string Email { get; set; }
+
 
         public Contact(string FirstName, string LastName, string Address, string City, string State, string ZipCode, string PhoneNumber, string Email)
         {
@@ -34,6 +35,17 @@ namespace AddressBook
             this.ZipCode = ZipCode;
             this.PhoneNumber = PhoneNumber;
             this.Email = Email;
+        }
+
+        /// <summary>
+        /// Converts to string.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return FirstName + "\t" + LastName + "\t" + Address + "\t" + City + "\t" + State + "\t" + ZipCode + "\t" + PhoneNumber + "\t" + Email;
         }
     }
 }

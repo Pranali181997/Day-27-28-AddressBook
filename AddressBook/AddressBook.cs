@@ -6,13 +6,14 @@ namespace AddressBook
 {
     class AddressBook
     {
-
-        public HashSet<Contact> People;
+        //declaration
+        public List<Contact> People;
 
         public AddressBook()
         {
-            People = new HashSet<Contact>();
+            People = new List<Contact>();
         }
+
         public Contact FindContact(string fname)
         {
             Contact contact = null;
@@ -44,11 +45,6 @@ namespace AddressBook
                 return false;
         }
 
-        /// <summary>
-        /// Removes the contact.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <returns></returns>
         public bool RemoveContact(string name)
         {
             //creation of object for contact
@@ -87,6 +83,51 @@ namespace AddressBook
             {
                 Console.WriteLine(s);
             }
+        }
+
+        /// <summary>
+        /// Sorts the by pincode.
+        /// </summary>
+        public void SortByPincode()
+        {
+            //Comparision method is used to compare two objects of same type
+            People.Sort(new Comparison<Contact>((x, y) => string.Compare(x.ZipCode, y.ZipCode)));
+            //traversing through contact class
+            foreach (Contact c in People)
+            {
+                Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.PhoneNumber + "\t" + c.Email);
+            }
+
+        }
+
+        /// <summary>
+        /// Sorts the by city.
+        /// </summary>
+        public void SortByCity()
+        {
+            //Comparision method is used to compare two objects of same type
+            People.Sort(new Comparison<Contact>((x, y) => string.Compare(x.City, y.City)));
+            //traversing through contact class
+            foreach (Contact c in People)
+            {
+                Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.PhoneNumber + "\t" + c.Email);
+            }
+
+        }
+
+        /// <summary>
+        /// Sorts the state 
+        /// </summary>
+        public void SortByState()
+        {
+            //Comparision method is used to compare two objects of same type
+            People.Sort(new Comparison<Contact>((x, y) => string.Compare(x.State, y.State)));
+            //traverse through contact class
+            foreach (Contact c in People)
+            {
+                Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.PhoneNumber + "\t" + c.Email);
+            }
+
         }
     }
 }
