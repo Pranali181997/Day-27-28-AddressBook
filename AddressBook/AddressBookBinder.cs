@@ -38,15 +38,13 @@ namespace AddressBook
         /// <returns></returns>
         public List<string> DistinctCities()
         {
-            //creating a list
             List<string> City = new List<string>();
-            //traversing 
             foreach (var key in Binder.Keys)
             {
                 foreach (Contact c in Binder[key])
                 {
                     if (City.Contains(c.City))
-                        break;
+                        continue;
                     else
                         City.Add(c.City);
                 }
