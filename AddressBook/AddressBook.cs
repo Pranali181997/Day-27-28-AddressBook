@@ -6,19 +6,26 @@ namespace AddressBook
 {
     class AddressBook
     {
-        //creates a list
-        public List<Contact> People;
+        //creating an hashset to store contacts
+        public HashSet<Contact> People;
 
         public AddressBook()
         {
-            People = new List<Contact>();
+            People = new HashSet<Contact>();
         }
-
 
         public Contact FindContact(string fname)
         {
-            //finding the person's contact by first name
-            Contact contact = People.Find((person) => person.FirstName == fname);
+            Contact contact = null;
+            //traversing
+            foreach (var person in People)
+            {
+                if (person.FirstName.Equals(fname))
+                {
+                    contact = person;
+                    break;
+                }
+            }
             return contact;
         }
 
@@ -38,7 +45,6 @@ namespace AddressBook
             else
                 return false;
         }
-
 
         public bool RemoveContact(string name)
         {

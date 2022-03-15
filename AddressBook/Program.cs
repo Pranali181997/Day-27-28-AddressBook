@@ -14,16 +14,13 @@ namespace AddressBook
             //reference for binder class
             AddressBookBinder binder = new AddressBookBinder();
             //welcome message
-            Console.WriteLine("Hello , Welcome to Address Book Program");
-            //initialization
+            Console.WriteLine("Welcome to Address Book Program");
             int result = 1;
             while (result == 1)
             {
                 Console.WriteLine("Enter the name of the Address Book to be used");
                 string addrName = Console.ReadLine();
-                //reference for obejct of addressbook class
                 AddressBook book = new AddressBook();
-                //calls add address book function
                 book.People = binder.AddAddrBook(addrName, book.People);
                 int loop = 1;
                 while (loop == 1)

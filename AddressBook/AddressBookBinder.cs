@@ -4,20 +4,14 @@ using System.Text;
 
 namespace AddressBook
 {
+
+
     class AddressBookBinder
     {
-        //creating a dictionary by passing string and list as arguements
-        public Dictionary<string, List<Contact>> Binder = new Dictionary<string, List<Contact>>();
-
-        /// <summary>
-        /// Adds the addr book.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="list">The list.</param>
-        /// <returns></returns>
-        public List<Contact> AddAddrBook(string key, List<Contact> list)
+        //creating dictionary to store contacts passing hashset as an arguement
+        public Dictionary<string, HashSet<Contact>> Binder = new Dictionary<string, HashSet<Contact>>();
+        public HashSet<Contact> AddAddrBook(string key, HashSet<Contact> set)
         {
-            //checks whether key is present in binder class
             if (this.Binder.ContainsKey(key))
             {
                 Console.WriteLine("Address book already exists");
@@ -26,9 +20,10 @@ namespace AddressBook
             else
             {
                 Console.WriteLine("New address book created");
-                Binder.Add(key, list);
+                Binder.Add(key, set);
                 return Binder[key];
             }
         }
     }
 }
+
