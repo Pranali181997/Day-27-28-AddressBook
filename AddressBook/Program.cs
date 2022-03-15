@@ -1,18 +1,17 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.IO;
 namespace AddressBook
 {
     class Program
     {
-        /// <summary>
-        /// Defines the entry point of the application.
-        /// </summary>
-        /// <param name="args">The arguments.</param>
+        //creating a list
+        public static List<string> data = new List<string>();
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, Welcome to Address Book");
             //reference for binder class
             AddressBookBinder binder = new AddressBookBinder();
+            Console.WriteLine("Hello, Welcome to Address Book");
             int result = 1;
             while (result == 1)
             {
@@ -23,7 +22,7 @@ namespace AddressBook
                 int loop = 1;
                 while (loop == 1)
                 {
-                    Console.WriteLine("\nSelect the option. \n1. Add new contact. \n2. Edit existing contact.\n3. Delete Contact \n4. Search By City \n5. Count citywise contacts \n6. Display Alphabetically \n7. Sort By Zipcode \n8. Sort By City \n9. Sort By State \n10. Exit.");
+                    Console.WriteLine("\nSelect the option. \n1. Add new contact. \n2. Edit existing contact.\n3. Delete Contact \n4. Search By City \n5. Count citywise contacts \n6. Display Alphabetically \n7. Sort By Zipcode \n8. Sort By City \n9. Sort By State  \n10. ReadWriteCase \n11.ReadWriteCSVFile  \n12.Exit.");
                     int option = int.Parse(Console.ReadLine());
                     switch (option)
                     {
@@ -125,8 +124,23 @@ namespace AddressBook
                             book.SortByState();
                             break;
                         case 10:
-                            loop = 0;
+                            Console.WriteLine("Writing contacts in file");
+                            //writes using stream writer
+                            //AddressBook book = new AddressBook();
+                            book.WriteUsingStreamWriter();
+                            //reads from stream reader
+                            //ReadWrite.ReadFromStreamReader();
                             break;
+                        case 11:
+                            Console.WriteLine("riting contacts in csv file");
+                            book.WriteUsingCSV();
+                            //ReadWrite.ReadFromStreamReader();
+                            break;
+                        case 12:
+                            loop = 0;
+                            break;  
+
+
                     }
                     binder.Binder[addrName] = (book.People);
                 }
@@ -136,13 +150,14 @@ namespace AddressBook
             //traversing through binder class
             foreach (var key in binder.Binder.Keys)
             {
-                Console.WriteLine(key);
-                //traversing in the binder class to search contact
+                data.Add(key);
+                //traversing ithrough contact class
                 foreach (Contact c in binder.Binder[key])
                 {
-                    Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.PhoneNumber + "\t" + c.Email);
+                    data.Add(c.ToString());
                 }
             }
+          
         }
     }
 }

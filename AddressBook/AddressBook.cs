@@ -1,5 +1,8 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Text;
 
 namespace AddressBook
@@ -129,5 +132,36 @@ namespace AddressBook
             }
 
         }
-    }
+
+        public void WriteUsingStreamWriter()
+        {
+            string FilePath = @"C:\Users\Admin\source\repos\BATCH 111\Day-27-AddressBook\AddressBook\Sample.txt";
+
+            using (StreamWriter sw = File.CreateText(FilePath))
+            {
+                foreach (var con in People)
+                {
+                    Console.WriteLine("Added record in file");
+                    sw.WriteLine("****************Peoples In address book********************");
+                    sw.WriteLine("First Name:" + con.FirstName);                    sw.WriteLine("Last Name:" + con.LastName);
+                    sw.WriteLine("Address:" + con.Address);
+                    sw.WriteLine("City:" + con.City);
+                    sw.WriteLine("Email:" + con.Email);
+                    sw.WriteLine("PhoneNumber:" + con.PhoneNumber);
+                    sw.WriteLine("ZipCode:" + con.ZipCode);
+                    sw.WriteLine("State:" + con.State);
+                }
+            }
+        }
+        public void WriteUsingCSV()
+        {
+            string Filepath = @"C:\Users\Admin\source\repos\BATCH 111\Day-27-AddressBook\AddressBook\TextFile1.csv";
+            using (CsvWriter sw = new CsvWriter(new StreamWriter(Filepath), CultureInfo.InvariantCulture))
+            {
+               sw.WriteHeader<Contact>();
+                sw.WriteRecords("\n");
+                sw.WriteRecords(People);
+            }
+        }
+    }   
 }

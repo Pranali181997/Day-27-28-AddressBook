@@ -6,9 +6,7 @@ namespace AddressBook
 {
     class AddressBookBinder
     {
-        //dictionary to store details of binder class
         public Dictionary<string, List<Contact>> Binder = new Dictionary<string, List<Contact>>();
-        //dictinary to store city
         public Dictionary<string, List<Contact>> CityDictionary = new Dictionary<string, List<Contact>>();
 
         /// <summary>
@@ -77,3 +75,4 @@ namespace AddressBook
         }
     }
 }
+
