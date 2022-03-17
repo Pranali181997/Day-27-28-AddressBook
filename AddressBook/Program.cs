@@ -22,7 +22,7 @@ namespace AddressBook
                 int loop = 1;
                 while (loop == 1)
                 {
-                    Console.WriteLine("\nSelect the option. \n1. Add new contact. \n2. Edit existing contact.\n3. Delete Contact \n4. Search By City \n5. Count citywise contacts \n6. Display Alphabetically \n7. Sort By Zipcode \n8. Sort By City \n9. Sort By State  \n10. ReadWriteCase \n11.ReadWriteCSVFile  \n12.Exit.");
+                    Console.WriteLine("\nSelect the option. \n1. Add new contact. \n2. Edit existing contact.\n3. Delete Contact \n4. Search By City \n5. Count citywise contacts \n6. Display Alphabetically \n7. Sort By City State Pincade \n8. ReadWriteCase \n9.ReadWriteCSVFile  \n10.ReadWriteJsonFile \n11.Exit.");
                     int option = int.Parse(Console.ReadLine());
                     switch (option)
                     {
@@ -99,44 +99,49 @@ namespace AddressBook
                             binder.CreateDictionary();
                             Console.WriteLine("Enter city whose contacts need to be searched");
                             string city = Console.ReadLine();
-                            foreach (Contact contact in binder.CityDictionary[city])
+                            foreach (Contact contact in binder.Binder[city])
                             {
                                 Console.WriteLine(contact.FirstName + "\t" + contact.LastName + "\t" + contact.Address + "\t" + contact.City + "\t" + contact.State + "\t" + contact.ZipCode + "\t" + contact.PhoneNumber + "\t" + contact.Email);
                             }
                             break;
                         case 5:
                             binder.CreateDictionary();
-                            foreach (var key in binder.CityDictionary.Keys)
+                            foreach (var key in binder.Binder.Keys)
                             {
-                                Console.WriteLine(key + "\t" + binder.CityDictionary[key].Count);
+                                Console.WriteLine(key + "\t" + binder.Binder[key].Count);
                             }
                             break;
                         case 6:
                             book.AlphabeticallyArrange();
                             break;
                         case 7:
-                            book.SortByPincode();
+                            book.sortingmethod();
                             break;
+                        //case 8:
+                        //    book.sortingmethod();
+                        //    break;
+                        //case 9:
+                        //    book.sortingmethod();
+                        //    break;
                         case 8:
-                            book.SortByCity();
-                            break;
-                        case 9:
-                            book.SortByState();
-                            break;
-                        case 10:
-                            Console.WriteLine("Writing contacts in file");
-                            //writes using stream writer
+                            Console.WriteLine("Writing contacts in .txt file");
+                            
                             //AddressBook book = new AddressBook();
                             book.WriteUsingStreamWriter();
-                            //reads from stream reader
+                            
                             //ReadWrite.ReadFromStreamReader();
                             break;
-                        case 11:
-                            Console.WriteLine("riting contacts in csv file");
+                        case 9:
+                            Console.WriteLine("writing contacts in csv file");
                             book.WriteUsingCSV();
                             //ReadWrite.ReadFromStreamReader();
                             break;
-                        case 12:
+                        case 10:
+                            Console.WriteLine("writing contacts in Json file");
+                            book.WriteToJsonFile();
+                            //ReadWrite.ReadJsonFile();
+                            break;
+                        case 11:
                             loop = 0;
                             break;  
 

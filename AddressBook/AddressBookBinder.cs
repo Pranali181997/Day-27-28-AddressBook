@@ -7,14 +7,7 @@ namespace AddressBook
     class AddressBookBinder
     {
         public Dictionary<string, List<Contact>> Binder = new Dictionary<string, List<Contact>>();
-        public Dictionary<string, List<Contact>> CityDictionary = new Dictionary<string, List<Contact>>();
-
-        /// <summary>
-        /// Adds the addr book.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="set">The set.</param>
-        /// <returns></returns>
+       // public Dictionary<string, List<Contact>> CityDictionary = new Dictionary<string, List<Contact>>();
         public List<Contact> AddAddrBook(string key, List<Contact> set)
         {
             if (this.Binder.ContainsKey(key))
@@ -29,11 +22,6 @@ namespace AddressBook
                 return Binder[key];
             }
         }
-
-        /// <summary>
-        /// Distincts the cities.
-        /// </summary>
-        /// <returns></returns>
         public List<string> DistinctCities()
         {
             List<string> City = new List<string>();
@@ -49,10 +37,6 @@ namespace AddressBook
             }
             return City;
         }
-
-        /// <summary>
-        /// Creates the dictionary.
-        /// </summary>
         public void CreateDictionary()
         {
             List<string> City1 = DistinctCities();
@@ -67,10 +51,10 @@ namespace AddressBook
                             CityContact.Add(c);
                     }
                 }
-                if (this.CityDictionary.ContainsKey(city))
-                    CityDictionary[city] = CityContact;
+                if (this.Binder.ContainsKey(city))
+                    Binder[city] = CityContact;
                 else
-                    CityDictionary.Add(city, CityContact);
+                    Binder.Add(city, CityContact);
             }
         }
     }

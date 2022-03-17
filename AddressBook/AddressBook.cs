@@ -1,22 +1,22 @@
 ﻿using CsvHelper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
-
+using System.Text.Json;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 namespace AddressBook
 {
     class AddressBook
     {
-        //declaration
         public List<Contact> People;
 
         public AddressBook()
         {
             People = new List<Contact>();
         }
-
         public Contact FindContact(string fname)
         {
             Contact contact = null;
@@ -30,15 +30,12 @@ namespace AddressBook
             }
             return contact;
         }
-
         public bool AddContact(string FirstName, string LastName, string Address, string City, string State, string ZipCode, string PhoneNumber, string Email)
         {
             Contact contact = new Contact(FirstName, LastName, Address, City, State, ZipCode, PhoneNumber, Email);
-            //finds contact and stores into result
+          
             Contact result = FindContact(FirstName);
-            //checks if result is empty
-            //then adds the contact and returns true
-            //else returns false
+
             if (result == null)
             {
                 People.Add(contact);
@@ -48,13 +45,38 @@ namespace AddressBook
                 return false;
         }
 
+
+        public void sortingmethod()
+        {
+            Console.WriteLine("Select sorting for : 1.City 2.State 3.Pincode");
+            int option = Convert.ToInt32(Console.ReadLine());
+
+            switch (option)
+            {
+                case 1:
+                    People.Sort(new Comparison<Contact>((x, y) => string.Compare(x.City, y.City)));
+                    break;
+
+                case 2:
+                    People.Sort(new Comparison<Contact>((x, y) => string.Compare(x.State, y.State)));
+                    break;
+
+                 case 3:
+                    People.Sort(new Comparison<Contact>((x, y) => string.Compare(x.ZipCode, y.ZipCode)));
+                    break;
+                default:
+                    break;
+             
+            }
+            foreach (Contact c in People)
+            {
+                Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.PhoneNumber + "\t" + c.Email);
+            }
+        }
         public bool RemoveContact(string name)
         {
-            //creation of object for contact
+
             Contact c = FindContact(name);
-            //checks in c for the contact
-            //if it is true then contact will be removed
-            //otherwise returns false
             if (c != null)
             {
                 People.Remove(c);
@@ -65,17 +87,10 @@ namespace AddressBook
                 return false;
             }
         }
-
-        /// <summary>
-        /// Alphabeticallies the arrange.
-        /// </summary>
         public void AlphabeticallyArrange()
         {
             //creation of list
             List<string> alphabeticalList = new List<string>();
-            //traverses through contact class
-            //and returns the string after sorting that represents the current object
-            //and then adds that object which is sorted to the end of list
             foreach (Contact c in People)
             {
                 string sort = c.ToString();
@@ -87,51 +102,39 @@ namespace AddressBook
                 Console.WriteLine(s);
             }
         }
+        //public void SortByPincode()
+        //{
+          
+        //    People.Sort(new Comparison<Contact>((x, y) => string.Compare(x.ZipCode, y.ZipCode)));
+            
+        //    foreach (Contact c in People)
+        //    {
+        //        Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.PhoneNumber + "\t" + c.Email);
+        //    }
 
-        /// <summary>
-        /// Sorts the by pincode.
-        /// </summary>
-        public void SortByPincode()
-        {
-            //Comparision method is used to compare two objects of same type
-            People.Sort(new Comparison<Contact>((x, y) => string.Compare(x.ZipCode, y.ZipCode)));
-            //traversing through contact class
-            foreach (Contact c in People)
-            {
-                Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.PhoneNumber + "\t" + c.Email);
-            }
+        //}
+        //public void SortByCity()
+        //{
+           
+        //    People.Sort(new Comparison<Contact>((x, y) => string.Compare(x.City, y.City)));
+            
+        //    foreach (Contact c in People)
+        //    {
+        //        Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.PhoneNumber + "\t" + c.Email);
+        //    }
 
-        }
+        //}
+        //public void SortByState()
+        //{
+           
+        //    People.Sort(new Comparison<Contact>((x, y) => string.Compare(x.State, y.State)));
+          
+        //    foreach (Contact c in People)
+        //    {
+        //        Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.PhoneNumber + "\t" + c.Email);
+        //    }
 
-        /// <summary>
-        /// Sorts the by city.
-        /// </summary>
-        public void SortByCity()
-        {
-            //Comparision method is used to compare two objects of same type
-            People.Sort(new Comparison<Contact>((x, y) => string.Compare(x.City, y.City)));
-            //traversing through contact class
-            foreach (Contact c in People)
-            {
-                Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.PhoneNumber + "\t" + c.Email);
-            }
-
-        }
-
-        /// <summary>
-        /// Sorts the state 
-        /// </summary>
-        public void SortByState()
-        {
-            //Comparision method is used to compare two objects of same type
-            People.Sort(new Comparison<Contact>((x, y) => string.Compare(x.State, y.State)));
-            //traverse through contact class
-            foreach (Contact c in People)
-            {
-                Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.PhoneNumber + "\t" + c.Email);
-            }
-
-        }
+        //}
 
         public void WriteUsingStreamWriter()
         {
@@ -143,7 +146,8 @@ namespace AddressBook
                 {
                     Console.WriteLine("Added record in file");
                     sw.WriteLine("****************Peoples In address book********************");
-                    sw.WriteLine("First Name:" + con.FirstName);                    sw.WriteLine("Last Name:" + con.LastName);
+                    sw.WriteLine("First Name:" + con.FirstName);
+                    sw.WriteLine("Last Name:" + con.LastName);
                     sw.WriteLine("Address:" + con.Address);
                     sw.WriteLine("City:" + con.City);
                     sw.WriteLine("Email:" + con.Email);
@@ -163,5 +167,27 @@ namespace AddressBook
                 sw.WriteRecords(People);
             }
         }
+        //Write A JSON file
+        public void WriteToJsonFile()
+        {
+            string filePath = @"C:\Users\Admin\source\repos\BATCH 111\Day-27-AddressBook\AddressBook\TextFile1.json";
+            if (File.Exists(filePath))
+            {
+                JsonSerializer jsonSerializer = new JsonSerializer();
+                using (StreamWriter streamWriter = new StreamWriter(filePath))
+                {
+                    using (JsonWriter writer = new JsonTextWriter(streamWriter))
+                    {
+                        jsonSerializer.Serialize(writer, People);
+                    }
+                }
+               
+            }
+            else
+            {
+                Console.WriteLine("File not exists!");
+            }
+        }
+      
     }   
 }
